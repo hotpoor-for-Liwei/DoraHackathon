@@ -4,8 +4,7 @@
 <body>
 
     <div id="result"></div>
-
-    <script>
+    <script src="dist/js2wordcloud.min.js">
         // Check browser support
         function check_it() {
             if ($(".room_info_top").length) {
@@ -23,15 +22,42 @@
                             else {
                                 wordnum[worddict[dict_index][word_index]] = 1;
                             }
-                            // Check browser support
-
                         }
                     }
-                    console.log(wordnum);
-                } else {
+                    return wordnum;
+                } else {                            // Check browser support
                     $(".room_info_top").html("Sorry, your browser does not support Web Storage...");
+                    return null;
                 }
             }
+        }
+    </script>
+    <script>
+        function wordcloud(word_freq) {
+            f_list = [",", ".", "?", "...", "\\", "/", "\"", "我", 
+                "\"\"", ";", ":", "(", ")", "!", "@", "，", "。", "、", "‘", "“",
+                "“”", "；", "：", "）", "（", "。。。", "《", "》", "的", "与", "是", "于",
+                "主要", "等", "它", "他", "她", "具有", "并", "多", "而", "了", "个", "和", "将",
+                "就", "我国", "人", "都", "在", "中", "但", "有", "能", "使", "给", "以", "要", "把",
+                "还", "后", "前", "上", "下", "这", "那", "为", "各", "一定", "目前", "所", "其", "一些",
+                "也", "增加", "必须", "进行", "问题", "及", "一", "说", "据", "日", "月", "们", "向", "更", "会", "可", "时", "被"];
+            
+            mydict = check_it();
+            mylist = [];
+            for (i in mydict)
+                if (!f_list.includes(i) && mydict[i] > word_freq)
+                    mylist.push([i, mydict[i]])
+
+            var wc = new Js2WordCloud($(".room_info_top")[0])
+            wc.setOption({
+                tooltip: {
+                    show: true
+                },
+                list: mylist,
+                color: '#15a4fa'
+            })
+
+            console.log(mylist);
         }
     </script>
 
