@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <div id="result"></div>
+
+    <script>
+        // Check browser support
+        function check_it() {
+            if ($(".room_info_top").length) {
+                if (typeof (Storage) !== "undefined") {
+                    // Store
+                    //localStorage.setItem("lastname", "Smith");
+                    // Retrieve
+                    worddict = JSON.parse(localStorage.getItem("TagWords"))["data"];
+                    wordnum = {}
+                    for (dict_index in worddict) {
+                        for (word_index in worddict[dict_index]) {
+                            if (wordnum[worddict[dict_index][word_index]] !== undefined) {
+                                wordnum[worddict[dict_index][word_index]]++;
+                            }
+                            else {
+                                wordnum[worddict[dict_index][word_index]] = 1;
+                            }
+                            // Check browser support
+
+                        }
+                    }
+                    console.log(wordnum);
+                } else {
+                    $(".room_info_top").html("Sorry, your browser does not support Web Storage...");
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
